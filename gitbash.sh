@@ -35,12 +35,6 @@ function createRepo {
   git push -u origin master
 }
 
-#Update an existing repo
-#Pass the URL as an argument
-function updateRepo {
-
-}
-
 #Notice the 's' right after the word 'Repo'
 function createRepos {
   NUM_OF_REPEATS = $# #How many repositories do you want to create?
@@ -49,9 +43,3 @@ function createRepos {
     createRepo repoName
   done
 }
-
-function main {
-}
-
-#start
-main
