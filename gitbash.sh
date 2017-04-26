@@ -23,14 +23,16 @@ README=0
 FIRST_COMMIT_MSG="\"First commit\""
 
 function createRepo {
-  eval "git init"
+  repoName=$1
+  curl -u $USERNAME https://api.github.com/user/repos -d "{\"name\":\"$repoName\"}"
+  git init
   if [README == 0]; then
-    eval "touch README.md"
+    touch README.md
   fi
-  eval "git add ."
-  eval "git commit -m "${FIRST_COMMIT_MSG}
-  eval "git remote add origin"
-  eval "git push -u origin master"
+  git add .
+  git commit -m ${FIRST_COMMIT_MSG}
+  git remote add origin "https://github.com/"$USERNAME"/"$repoName".git"
+  git push -u origin master
 }
 
 #Update an existing repo
