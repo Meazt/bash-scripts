@@ -1,7 +1,12 @@
 #!/bin/env bash
 
+#Use this bash script whenever you want to automate pushing multiple repositories to Github
+#Create multiple repositories
+#Or delete multiple repositories
+#I may add some more features to this script so that it becomes more versatile
+{
 USERNAME=$(git config user.name)
-#PASSWORD=
+PASSWORD= #set PASSWORD to your password
 GIT_PROFILE="https://github.com/"$USERNAME"/"
 #if README is 0 then create() will create a README.md file
 #else create() won't create a README.md file
@@ -17,7 +22,7 @@ function create {
     echo "MAKING $repo REPOSITORY"
     mkdir $repo
     cd ./$repo
-    curl -u $USERNAME https://api.github.com/user/repos -d "{\"name\":\"$repo\"}"
+    curl -u $USERNAME:$PASSWORD https://api.github.com/user/repos -d "{\"name\":\"$repo\"}"
     git init
     if [[ $README -eq 0 ]]; then
       touch README.md
@@ -36,9 +41,9 @@ function push {
   for repo in "$@"; do
     echo "PUSHING TO $repo REPOSITORY"
     cd $repo
-    git add .
-    git commit -m "$DATE" #the commit message will be the current date
-    git remote add origin "$GIT_PROFILE""$repo"".git"
+    eval "git add ."
+    git commit -m "\"$DATE\"" #the commit message will be the current date
+    git remote add origin $GIT_PROFILE$repo.git
     git push -u origin master
     cd ..
     echo "$repo REPOSITORY PUSH COMPLETE"
@@ -58,3 +63,4 @@ function main {
 }
 
 main $@
+}
