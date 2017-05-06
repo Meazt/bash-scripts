@@ -21,7 +21,9 @@
     echo "apm not installed"
     echo "installing apm"
     os="uname"
-    if [[$os == "Darwin"]]; then
+    if [[ $os == "Darwin" ]]; then
+      echo "do stuff"
+    elif [[ $os == "Linux" ]]; then
       echo "do stuff"
     fi
   fi
